@@ -7,12 +7,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import org.json.JSONObject;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Image;
 
 public class AplikasiCuacaFrame extends javax.swing.JFrame {
     
     private int inputCount = 0; // Menyimpan jumlah input kota
     private String lastInputCity = ""; // Menyimpan input terakhir untuk verifikasi
     private JTable weatherTable; // JTable untuk menampilkan data cuaca
+   // Label untuk menampilkan ikon cuaca
 
     
     public AplikasiCuacaFrame() {
@@ -37,6 +39,9 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
                     JSONObject weatherData = weatherService.getWeather(city);
                     String weatherDescription = weatherData.getJSONArray("weather").getJSONObject(0).getString("description");
                     weatherLabel.setText("Cuaca: " + weatherDescription);
+                    
+                    // Menampilkan gambar berdasarkan kondisi cuaca
+                    displayWeatherIcon(weatherDescription);
 
                     // Simpan data ke CSV
                     saveToCSV(city + "," + weatherDescription);
@@ -79,6 +84,47 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
 
         setVisible(true); // Menampilkan JFrame
     }
+    
+     // Method untuk menampilkan gambar berdasarkan kondisi cuaca
+   private void displayWeatherIcon(String weatherDescription) {
+            String iconPath;
+
+            // Jika deskripsi cuaca null, atur gambar default
+            if (weatherDescription == null) {
+                iconPath = "resources/default.png"; // Gambar default
+            } else {
+                // Mengubah deskripsi menjadi huruf kecil
+                String description = weatherDescription.toLowerCase();
+
+                // Tentukan path gambar berdasarkan deskripsi cuaca
+                if (description.contains("clear") || description.contains("sunny")) {
+                    iconPath = "C:\\Users\\Putra\\Pictures\\cuaca\\sunny.png";
+                } else if (description.contains("cloud") || description.contains("overcast")) {
+                    iconPath = "C:\\Users\\Putra\\Pictures\\cuaca\\cloudy.png";
+                } else if (description.contains("rain")) {
+                    iconPath = "C:\\Users\\Putra\\Pictures\\cuaca\\rainy.png";
+                } else if (description.contains("snow")) {
+                    iconPath = "C:\\Users\\Putra\\Pictures\\cuaca\\snowy.png";
+                } else {
+                    iconPath = "resources/default.png"; // Gambar default jika kondisi tidak dikenali
+                }
+            }
+
+            // Pastikan weatherIconLabel telah diinisialisasi
+            if (weatherIconLabel == null) {
+                System.err.println("weatherIconLabel belum diinisialisasi.");
+                return;
+            }
+
+            // Memuat gambar
+            ImageIcon icon = new ImageIcon(iconPath);
+            Image image = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Menyesuaikan ukuran gambar
+            weatherIconLabel.setIcon(new ImageIcon(image)); // Mengatur ikon pada label
+        }
+
+
+
+
     
     // Method untuk menambahkan kota ke JComboBox sebagai kota favorit
     private void addCityToFavorites(String city) {
@@ -143,6 +189,9 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
         loadButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        weatherIconLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,39 +216,66 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jLabel1.setText("Cari Kota :");
+
+        jLabel2.setText("Kota Favorit");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(checkButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(loadButton))
-                    .addComponent(weatherLabel)
-                    .addComponent(cityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(checkButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(loadButton)))
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(cityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(weatherLabel))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(weatherIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cityField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkButton)
                     .addComponent(loadButton))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(weatherIconLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(weatherLabel)
-                .addGap(39, 39, 39)
-                .addComponent(cityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,10 +312,13 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
     private javax.swing.JButton checkButton;
     private javax.swing.JComboBox<String> cityComboBox;
     private javax.swing.JTextField cityField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton loadButton;
+    private javax.swing.JLabel weatherIconLabel;
     private javax.swing.JLabel weatherLabel;
     // End of variables declaration//GEN-END:variables
 }
