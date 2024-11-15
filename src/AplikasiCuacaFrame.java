@@ -200,8 +200,6 @@ public class AplikasiCuacaFrame extends javax.swing.JFrame {
 
         weatherLabel.setText("Cuaca saat ini : ");
 
-        cityComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         loadButton.setText("Simpan Data");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
