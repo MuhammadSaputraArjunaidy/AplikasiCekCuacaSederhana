@@ -470,4 +470,4 @@ Berikut adalah deskripsi fitur-fitur utama aplikasi ini:
 
 #  Screenshot
 
-![Screenshot 2024-11-15 173755](https://github.com/user-attachments/assets/975c3d98-cf2f-48c4-96b8-2ccf1c282c6c)
+
