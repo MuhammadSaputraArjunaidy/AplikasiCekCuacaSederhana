@@ -31,7 +31,7 @@ Berikut adalah deskripsi fitur-fitur utama aplikasi ini:
 
 ## AplikasiCuacaFrame.java
 
-        ```
+```
         import javax.swing.*;
         import java.awt.event.ActionEvent;
         import java.awt.event.ActionListener;
@@ -459,12 +459,13 @@ Berikut adalah deskripsi fitur-fitur utama aplikasi ini:
             // Variables declaration - do not modify                     
             // End of variables declaration                   
         }
+```
+# Authors
 
- ```# Authors
+- MuhammadSaputraArjunaidy
+- 2210010300
+- 5B Reg Pagi Banjarmasin
+- [@MuhammadSaputraArjunaidy](https://www.github.com/MuhammadSaputraArjunaidy)
 
-    - MuhammadSaputraArjunaidy
-    - 2210010300
-    - 5B Reg Pagi Banjarmasin
-    - [@MuhammadSaputraArjunaidy](https://www.github.com/MuhammadSaputraArjunaidy)
 
-# Screenshot
+#  Screenshot
