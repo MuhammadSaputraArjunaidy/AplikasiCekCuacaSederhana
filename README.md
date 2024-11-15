@@ -31,7 +31,7 @@ Berikut adalah deskripsi fitur-fitur utama aplikasi ini:
 
 ## AplikasiCuacaFrame.java
 
-```
+```java
         import javax.swing.*;
         import java.awt.event.ActionEvent;
         import java.awt.event.ActionListener;
